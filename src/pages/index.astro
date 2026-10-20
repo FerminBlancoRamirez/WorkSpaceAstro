@@ -1,43 +1,35 @@
 ---
 // se ejecuta en el servidor
-const nombre = "Fermin";
-const luchadoresUFC = [
-	"Alexander Volkanovsky",
-	"Khamzat Chimaev",
-	"Jon Jones",
-	"Alexandre Pantoja",
-	"Kevin Vallejos",
-];
-import Button from "../components/Button.astro";
-import Card from "../components/Card.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
+const nombre= "Fermin"
+const luchadoresUFC= ["Alexander Volkanovsky", "Khamzat Chimaev", "Jon Jones", "Alexandre Pantoja", "Kevin Vallejos"]
 ---
 
 <!-- Se ejecuta en el cliente -->
-<script>
-	const valor = 5;
-</script>
+ <script>
+	const valor = 5
+ </script>
+ <style>
+	h1 {
+		color: #4f4f4f;
+		text-align: center;
+		font-size: xx-large;
+	}
+ </style>
 
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-	</head>
-	<body>
-		<BaseLayout>
-			<h1>Mi primera pagina en astro</h1>
-			<p>Yo me llamo {nombre}</p>
-			<h2>Luchadores UFC top pero random</h2>
-			<ul>
-				{luchadoresUFC.map((luchador) => <li>{luchador}</li>)}
-			</ul>
-			<Button title="Pulsame">Pulsame</Button>
-
-			<Card
-				imagen="https://s1.abcstatics.com/abc/www/multimedia/deportes/2024/11/14/jon-jones-ufc-RmXwQQ7YnqdsozUI78xeLUJ-1200x840@diario_abc.jpg"
-				titulo="Jon Jones"
-				texto="El mejor de la historia"/>
-		</BaseLayout>
-	</body>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1>Mi primera pagina en astro</h1>
+	<p>Yo me llamo {nombre}</p>
+	<h2>Luchadores UFC top pero random</h2>
+	<ul>
+		{luchadoresUFC.map(luchador=><li>{luchador}</li>)}
+	</ul>
+</body>
 </html>
+

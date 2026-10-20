@@ -1,6 +1,7 @@
-
 // @ts-check
 import { defineConfig } from 'astro/config';
+
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   server: {
@@ -8,5 +9,9 @@ export default defineConfig({
     allowedHosts:["https://satisfactory-concern-listprice-arena.trycloudflare.com",
         "nested-louisville-wanna-bone.trycloudflare.com"
     ]
+  },
+
+  vite: {
+    plugins: [tailwindcss()]
   }
 });
