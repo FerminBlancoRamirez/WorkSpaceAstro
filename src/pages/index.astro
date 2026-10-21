@@ -1,35 +1,46 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
 // se ejecuta en el servidor
-const nombre= "Fermin"
-const luchadoresUFC= ["Alexander Volkanovsky", "Khamzat Chimaev", "Jon Jones", "Alexandre Pantoja", "Kevin Vallejos"]
+const nombre = "Fermin";
+const luchadoresUFC = [
+	"Alexander Volkanovsky",
+	"Khamzat Chimaev",
+	"Jon Jones",
+	"Alexandre Pantoja",
+	"Kevin Vallejos",
+];
 ---
 
 <!-- Se ejecuta en el cliente -->
- <script>
-	const valor = 5
- </script>
- <style>
-	h1 {
-		color: #4f4f4f;
-		text-align: center;
-		font-size: xx-large;
-	}
- </style>
+<BaseLayout>
+	<script>
+		const valor = 5;
+	</script>
+	<style>
+		h1 {
+			color: #4f4f4f;
+			text-align: center;
+			font-size: xx-large;
+		}
+	</style>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
-	<h1>Mi primera pagina en astro</h1>
-	<p>Yo me llamo {nombre}</p>
-	<h2>Luchadores UFC top pero random</h2>
-	<ul>
-		{luchadoresUFC.map(luchador=><li>{luchador}</li>)}
-	</ul>
-</body>
-</html>
-
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8" />
+			<meta
+				name="viewport"
+				content="width=device-width, initial-scale=1.0"
+			/>
+			<title>Document</title>
+		</head>
+		<body>
+			<h1>Mi primera pagina en astro</h1>
+			<p>Yo me llamo {nombre}</p>
+			<h2>Luchadores UFC top pero random</h2>
+			<ul>
+				{luchadoresUFC.map((luchador) => <li>{luchador}</li>)}
+			</ul>
+		</body>
+	</html>
+</BaseLayout>
