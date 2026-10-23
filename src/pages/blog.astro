@@ -2,12 +2,15 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+//SSG statiic site generating
 const posts= await getCollection("post")
 ---
 
 <BaseLayout>
     <h1>Lista de todos los posts</h1>
     <ul>
-        {posts.map(post=><li>{post.data.titulo}</li>)}
+        {posts.map(post=><li>
+            <a href={"/blog"+post.id}>{post.data.titulo}</a>
+            </li>)}
     </ul>
 </BaseLayout>
