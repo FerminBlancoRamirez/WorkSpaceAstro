@@ -27,8 +27,12 @@ const proyects = defineCollection({
             autor: z.string().optional(),
             tags: z.array(z.string()).optional(),
             // Añade el campo de imagen obligatorio u opcional
-            imagen: image().optional(),
-            altImagen: z.string().optional(),
+            altImagen1: z.string().optional(),
+            altImagen2: z.string().optional(),
+            authorAvatar: image(),
+            imagen1: image().optional(),
+            imagen2: image().optional(),
+            rating: z.number().default(0)
         }),
 })
 
