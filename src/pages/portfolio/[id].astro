@@ -1,0 +1,29 @@
+---
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+    const proyect = await getCollection("proyects");
+    return proyect.map((proyect) => ({
+        params: { id: proyect.id },
+        props: { proyect },
+    }));
+}
+
+const proyect = Astro.props.proyect;
+const { Content } = await render(proyect);
+---
+
+<BaseLayout>
+    <h1>Detalles del post</h1>
+    <h2>{proyect.data.titulo}</h2>
+    <p>{proyect.data.fecha}-{proyect.data.autor}</p>
+    <Content />
+    <Image 
+    src={proyect.data.imagen} 
+            alt={proyect.data.altImagen || proyect.data.titulo} 
+            width={800} 
+            height={450}/>
+</BaseLayout>
