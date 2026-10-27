@@ -3,10 +3,12 @@ import { render } from "astro:content";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
+import RatingEstrellas from "../../components/StartRating.jsx";
+import StarRating from "../../components/StartRating.jsx";
 
 export async function getStaticPaths() {
-    const proyect = await getCollection("proyects");
-    return proyect.map((proyect) => ({
+    const proyects = await getCollection("proyects");
+    return proyects.map((proyect) => ({
         params: { id: proyect.id },
         props: { proyect },
     }));
@@ -18,12 +20,85 @@ const { Content } = await render(proyect);
 
 <BaseLayout>
     <h1>Detalles del post</h1>
-    <h2>{proyect.data.titulo}</h2>
-    <p>{proyect.data.fecha}-{proyect.data.autor}</p>
+
+    <!-- Cabecera con Foto de Perfil y datos del autor -->
+    <div class="autor-header">
+        {proyect.data.authorAvatar && (
+            <Image 
+                src={proyect.data.authorAvatar} 
+                alt={proyect.data.autor} 
+                class="avatar"
+                width={50} 
+                height={50}
+            />
+        )}
+        <div>
+            <h2>{proyect.data.titulo}</h2>
+            <p>{proyect.data.fecha} - {proyect.data.autor}</p>
+        </div>
+    </div>
+
+    <!-- Componente de estrellitas en React -->
+    <div class="rating-box">
+        <StarRating client:load initialRating={proyect.data.rating || 0} />
+    </div>
+
+    <!-- Contenido Markdown -->
     <Content />
-    <Image 
-    src={proyect.data.imagen} 
-            alt={proyect.data.altImagen || proyect.data.titulo} 
-            width={800} 
-            height={450}/>
+
+    <!-- Las 2 Imágenes del Proyecto -->
+    <div class="galeria">
+        {proyect.data.imagen1 && (
+            <Image 
+                src={proyect.data.imagen1} 
+                alt={`${proyect.data.titulo} 1`} 
+                width={350} 
+                height={220}
+                class="imagen-proyecto"
+            />
+        )}
+        {proyect.data.imagen2 && (
+            <Image 
+                src={proyect.data.imagen2} 
+                alt={`${proyect.data.titulo} 2`} 
+                width={350} 
+                height={220}
+                class="imagen-proyecto"
+            />
+        )}
+    </div>
 </BaseLayout>
+
+<style>
+    .autor-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 1rem;
+    }
+    .avatar {
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .rating-box {
+        margin: 1rem 0;
+    }
+    .galeria {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+
+  .imagen-proyecto {
+    /* Establece ancho y alto fijos para ambas imágenes */
+    width: 350px;
+    height: 220px;
+    
+    /* Evita que la imagen se estire o deforme adaptando el encuadre */
+    object-fit: cover; /* Cambia a 'contain' si prefieres ver la imagen completa con barras oscuras */
+    border-radius: 8px;
+  }
+</style>

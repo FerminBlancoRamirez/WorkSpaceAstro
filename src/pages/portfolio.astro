@@ -1,16 +1,56 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
 
 //SSG statiic site generating
-const proyect= await getCollection("proyects")
+const proyects= await getCollection("proyects")
 ---
 
 <BaseLayout>
-    <h1>Lista de todos los posts</h1>
-    <ul>
-        {proyect.map(proyect=><li>
-            <a href={`/portfolio/${proyect.id}`}>{proyect.data.titulo}</a>
-            </li>)}
-    </ul>
+  <h1>Lista de todos los proyectos</h1>
+  <ul class="project-list">
+    {proyects.map(proyect => (
+      <li class="project-item">
+        <a href={`/portfolio/${proyect.id}`} class="project-link">
+          {/* Foto de perfil / Avatar del autor */}
+          {proyect.data.authorAvatar && (
+            <Image 
+              src={proyect.data.authorAvatar} 
+              alt={proyect.data.autor || "Autor"} 
+              class="avatar"
+              width={35}
+              height={35}
+            />
+          )}
+          <span>{proyect.data.titulo}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>
+
+<style>
+  .project-list {
+    list-style: none; /* Opcional: quita el punto negro si prefieres un diseño más limpio */
+    padding: 0;
+  }
+
+  .project-item {
+    margin-bottom: 0.75rem;
+  }
+
+  .project-link {
+    display: inline-flex;  /* Flexbox para alinear elementos */
+    align-items: center;  /* Centra la imagen y el texto en el eje vertical */
+    gap: 10px;            /* Espacio horizontal entre la imagen y el texto */
+    text-decoration: none;
+    font-size: 1.1rem;
+  }
+
+  .avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;       /* Elimina desalineaciones por comportamiento inline */
+  }
+</style>
