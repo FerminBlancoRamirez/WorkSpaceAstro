@@ -1,0 +1,31 @@
+---
+import FichaDePersonaje from "../components/FichaDePersonaje.astro"
+import BaseLayout from "../layouts/BaseLayout.astro"
+
+interface Personaje {
+  nombre: string
+  imagen: string
+}
+
+const res = await fetch("https://rickandmortyapi.com/api/character")
+const data = await res.json()
+
+// Mapeamos los datos de la API a nuestra interfaz
+const personajes: Personaje[] = data.results.map((character: any) => ({
+  nombre: character.name,
+  imagen: character.image // La API devuelve 'image'
+}))
+---
+
+<BaseLayout>
+    <h1>Los personajes de Rick And Morty</h1>
+    <section>
+        {/* Usamos paréntesis () en lugar de {} para hacer un return implícito */}
+        {personajes.map((person) => (
+            <FichaDePersonaje
+              nombre={person.nombre}
+              imagen={person.imagen}
+            />
+        ))}
+    </section>
+</BaseLayout>

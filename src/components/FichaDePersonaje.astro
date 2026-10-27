@@ -1,0 +1,32 @@
+---
+interface Props {
+  nombre: string
+  imagen: string
+}
+
+const { imagen, nombre } = Astro.props;
+---
+
+<div>
+    <img src={imagen} alt={nombre} loading="lazy" />
+    <h2>{nombre}</h2>
+</div>
+
+<style>
+    div {
+        border: 1px solid #ccc;
+        padding: 16px;
+        max-width: 400px;
+    }
+
+    img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 24px;
+    }
+</style>

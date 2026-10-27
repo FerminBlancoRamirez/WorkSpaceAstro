@@ -1,0 +1,17 @@
+---
+
+//SSG no se renueva
+export const prerender =false//lo convierte a ssr
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const res = await fetch("https://api.coinpaprika.com/v1/tickers/btc-bitcoin")
+
+const datos = await res.json()
+const precioBitcoin = datos.quotes.USD.price
+const precioBitcoinFormateado = precioBitcoin.toFixed(2)
+---
+
+<BaseLayout>
+    <h1>El precio del Bitcoin es: </h1>
+    <p> 1 BTC= {precioBitcoinFormateado}</p>
+</BaseLayout>
