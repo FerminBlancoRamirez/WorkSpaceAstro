@@ -7,26 +7,14 @@ interface Props {
 const { imagen, nombre } = Astro.props;
 ---
 
-<div>
-    <img src={imagen} alt={nombre} loading="lazy" />
-    <h2>{nombre}</h2>
+<div class="flex items-center gap-4 max-w-sm p-4 bg-white rounded-xl border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md hover:border-gray-300">
+  <img 
+    src={imagen} 
+    alt={nombre} 
+    loading="lazy" 
+    class="w-20 h-20 rounded-full object-cover shrink-0 border border-gray-100" 
+  />
+  <h2 class="text-xl font-semibold text-gray-800 leading-snug">
+    {nombre}
+  </h2>
 </div>
-
-<style>
-    div {
-        border: 1px solid #ccc;
-        padding: 16px;
-        max-width: 400px;
-    }
-
-    img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-    }
-
-    h2 {
-        margin: 0;
-        font-size: 24px;
-    }
-</style>

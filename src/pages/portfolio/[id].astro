@@ -3,7 +3,6 @@ import { render } from "astro:content";
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
-import RatingEstrellas from "../../components/StartRating.jsx";
 import StarRating from "../../components/StartRating.jsx";
 
 export async function getStaticPaths() {
@@ -19,86 +18,74 @@ const { Content } = await render(proyect);
 ---
 
 <BaseLayout>
-    <h1>Detalles del post</h1>
-
-    <!-- Cabecera con Foto de Perfil y datos del autor -->
-    <div class="autor-header">
-        {proyect.data.authorAvatar && (
-            <Image 
-                src={proyect.data.authorAvatar} 
-                alt={proyect.data.autor} 
-                class="avatar"
-                width={50} 
-                height={50}
-            />
-        )}
-        <div>
-            <h2>{proyect.data.titulo}</h2>
-            <p>{proyect.data.fecha} - {proyect.data.autor}</p>
-        </div>
-    </div>
-
-    <!-- Componente de estrellitas en React -->
-    <div class="rating-box">
-        <StarRating client:load initialRating={proyect.data.rating || 0} />
-    </div>
-
-    <!-- Contenido Markdown -->
-    <Content />
-
-    <!-- Las 2 Imágenes del Proyecto -->
-    <div class="galeria">
-        {proyect.data.imagen1 && (
-            <Image 
-                src={proyect.data.imagen1} 
-                alt={`${proyect.data.titulo} 1`} 
-                width={350} 
-                height={220}
-                class="imagen-proyecto"
-            />
-        )}
-        {proyect.data.imagen2 && (
-            <Image 
-                src={proyect.data.imagen2} 
-                alt={`${proyect.data.titulo} 2`} 
-                width={350} 
-                height={220}
-                class="imagen-proyecto"
-            />
-        )}
-    </div>
-</BaseLayout>
-
-<style>
-    .autor-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 1rem;
-    }
-    .avatar {
-        border-radius: 50%;
-        object-fit: cover;
-    }
-    .rating-box {
-        margin: 1rem 0;
-    }
-    .galeria {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: center;
-    margin-top: 1.5rem;
-  }
-
-  .imagen-proyecto {
-    /* Establece ancho y alto fijos para ambas imágenes */
-    width: 350px;
-    height: 220px;
+  <article class="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
     
-    /* Evita que la imagen se estire o deforme adaptando el encuadre */
-    object-fit: cover; /* Cambia a 'contain' si prefieres ver la imagen completa con barras oscuras */
-    border-radius: 8px;
-  }
-</style>
+    <!-- Encabezado Principal y Autor -->
+    <header class="border-b border-gray-200 pb-6 space-y-4">
+      <span class="inline-block text-xs font-semibold tracking-wider text-indigo-600 uppercase bg-indigo-50 px-2.5 py-1 rounded-md">
+        Detalles del proyecto
+      </span>
+
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
+        {proyect.data.titulo}
+      </h1>
+
+      <div class="flex items-center gap-3 pt-2">
+        {proyect.data.authorAvatar && (
+          <Image 
+            src={proyect.data.authorAvatar} 
+            alt={proyect.data.autor} 
+            class="w-12 h-12 rounded-full object-cover border-2 border-indigo-100 shadow-sm shrink-0"
+            width={50} 
+            height={50}
+          />
+        )}
+        <div class="text-sm">
+          <p class="font-semibold text-gray-900">{proyect.data.autor}</p>
+          {proyect.data.fecha && (
+            <p class="text-gray-500">{proyect.data.fecha}</p>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <!-- Componente de Calificación / Estrellas -->
+    <div class="flex items-center gap-2 bg-gray-50 p-4 rounded-xl border border-gray-100 w-fit">
+      <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Valoración:</span>
+      <StarRating client:load initialRating={proyect.data.rating || 0} />
+    </div>
+
+    <!-- Contenido Markdown estilizado con Tailwind Typography -->
+    <div class="prose prose-lg max-w-none prose-indigo text-gray-700">
+      <Content />
+    </div>
+
+    <!-- Galería de Imágenes -->
+    {(proyect.data.imagen1 || proyect.data.imagen2) && (
+      <section class="pt-6 border-t border-gray-100">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Galería de imágenes</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {proyect.data.imagen1 && (
+            <Image 
+              src={proyect.data.imagen1} 
+              alt={`${proyect.data.titulo} 1`} 
+              width={700} 
+              height={440}
+              class="w-full h-56 sm:h-64 object-cover rounded-xl shadow-md border border-gray-200 transition-transform duration-300 hover:scale-[1.02]"
+            />
+          )}
+          {proyect.data.imagen2 && (
+            <Image 
+              src={proyect.data.imagen2} 
+              alt={`${proyect.data.titulo} 2`} 
+              width={700} 
+              height={440}
+              class="w-full h-56 sm:h-64 object-cover rounded-xl shadow-md border border-gray-200 transition-transform duration-300 hover:scale-[1.02]"
+            />
+          )}
+        </div>
+      </section>
+    )}
+
+  </article>
+</BaseLayout>

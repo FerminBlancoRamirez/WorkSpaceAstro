@@ -1,46 +1,29 @@
 ---
+interface Props {
+  imagen: string;
+  titulo: string;
+  texto: string;
+}
+
 const { imagen, titulo, texto } = Astro.props;
 ---
 
-<div>
-  <!-- Imagen y Título al lado -->
-  <div>
-    <img src={imagen} />
-    <h1>{titulo}</h1>
+<div class="max-w-sm p-5 bg-white rounded-2xl border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md hover:border-gray-300">
+  <!-- Imagen y Título en línea -->
+  <div class="flex items-center gap-4">
+    <img 
+      src={imagen} 
+      alt={titulo}
+      loading="lazy"
+      class="w-20 h-20 rounded-xl object-cover shrink-0 border border-gray-100 shadow-inner" 
+    />
+    <h3 class="text-xl font-bold text-gray-900 leading-snug">
+      {titulo}
+    </h3>
   </div>
 
-  <!-- Texto debajo de ambos -->
-  <p>{texto}</p>
+  <!-- Texto debajo -->
+  <p class="mt-4 text-sm text-gray-600 leading-relaxed">
+    {texto}
+  </p>
 </div>
-
-<style>
-  div {
-    border: 1px solid #ccc;
-    padding: 16px;
-    max-width: 400px;
-  }
-
-  div > div {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border: none;
-    padding: 0;
-  }
-
-  img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: 24px;
-  }
-
-  p {
-    margin-top: 15px;
-    margin-bottom: 0;
-  }
-</style>

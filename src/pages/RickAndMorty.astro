@@ -3,6 +3,7 @@ import FichaDePersonaje from "../components/FichaDePersonaje.astro"
 import BaseLayout from "../layouts/BaseLayout.astro"
 
 interface Personaje {
+  id: number
   nombre: string
   imagen: string
 }
@@ -10,22 +11,27 @@ interface Personaje {
 const res = await fetch("https://rickandmortyapi.com/api/character")
 const data = await res.json()
 
-// Mapeamos los datos de la API a nuestra interfaz
+// Mapeamos los datos de la API e incluimos 'id' para la prop key
 const personajes: Personaje[] = data.results.map((character: any) => ({
+  id: character.id,
   nombre: character.name,
-  imagen: character.image // La API devuelve 'image'
+  imagen: character.image
 }))
 ---
 
 <BaseLayout>
-    <h1>Los personajes de Rick And Morty</h1>
-    <section>
-        {/* Usamos paréntesis () en lugar de {} para hacer un return implícito */}
-        {personajes.map((person) => (
-            <FichaDePersonaje
-              nombre={person.nombre}
-              imagen={person.imagen}
-            />
-        ))}
+  <main class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-center text-gray-900 tracking-tight mb-10">
+      Personajes de <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">Rick & Morty</span>
+    </h1>
+
+    <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
+      {personajes.map((person) => (
+        <FichaDePersonaje
+          nombre={person.nombre}
+          imagen={person.imagen}
+        />
+      ))}
     </section>
+  </main>
 </BaseLayout>
