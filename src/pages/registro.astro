@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+    <div
+        class="max-w-md mx-auto my-8 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700"
+    >
+        <form id="newsletter" class="flex flex-col gap-4">
+            <label
+                for="email"
+                class="text-lg font-semibold text-gray-800 dark:text-gray-100"
+            >
+                Subscríbete a mi boletín informativo
+            </label>
+
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="tu@email.com"
+                    required
+                    class="flex-1 px-4 py-2.5 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-900 dark:border-gray-600 dark:text-gray-100 dark:focus:ring-blue-400 transition-colors"
+                />
+                <button
+                    type="submit"
+                    class="px-5 py-2.5 font-medium text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600"
+                >
+                    Subscribirme
+                </button>
+            </div>
+        </form>
+    </div>
+</BaseLayout>
+
+<script>
+    import { actions } from "astro:actions";
+    const form = document.querySelector(
+        "#newsletter",
+    ) as HTMLFormElement | null;
+    form?.addEventListener("submit", guardarEmail);
+
+    async function guardarEmail(event: SubmitEvent) {
+        event.preventDefault();
+
+        const emailInput = document.querySelector(
+            "#email",
+        ) as HTMLInputElement | null;
+        const email = emailInput?.value;
+
+        const {data, error}=await actions.newsletter({email: "prueba"})
+        form?.reset();
+    }
+</script>

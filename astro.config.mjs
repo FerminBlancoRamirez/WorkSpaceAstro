@@ -6,6 +6,8 @@ import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import vercel from "@astrojs/vercel";
 
+import node from "@astrojs/node";
+
 export default defineConfig({
   server: {
     host: true,
@@ -20,5 +22,7 @@ export default defineConfig({
   },
 
   integrations: [react(), mdx()],
-  adapter: vercel()
+  adapter: node({
+    mode: "standalone"
+  })
 });
