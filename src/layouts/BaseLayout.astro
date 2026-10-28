@@ -4,32 +4,42 @@ import ClientRouter from "astro/components/ClientRouter.astro";
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" class="h-full bg-gray-50 text-gray-900 antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <ClientRouter/>
 </head>
-<body>
-    <header>
-        <Navegacion/>
+<body class="min-h-full flex flex-col font-sans">
+    
+    <!-- Encabezado / Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+            <Navegacion />
+        </div>
     </header>
-    <main>
+
+    <!-- Contenido Principal -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <slot />
     </main>
-    
+
+    <!-- Pie de página opcional para cerrar el layout -->
+    <footer class="bg-white border-t border-gray-200 py-6 text-center text-sm text-gray-500">
+        <p>© {new Date().getFullYear()} Mi Sitio Web. Todos los derechos reservados.</p>
+    </footer>
+
 </body>
 </html>
 
-<style>
-    body{
-        font-family: sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    header{
-        padding: 10px;
-        text-align: center;
-    }
+<style is:global>
+  /* Importación de Tailwind CSS v4 */
+  @import "tailwindcss";
+
+  /* Si usas Tailwind v3 en lugar de v4, reemplaza el @import de arriba por estas 3 líneas:
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  */
 </style>
