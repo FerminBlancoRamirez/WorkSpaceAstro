@@ -1,0 +1,12 @@
+services:
+  mysql_astro:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:? Te falta la variable de entorno MYSQL_PASSWORD}
+    ports: 
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./bd/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+volumes:
+  mysql_data:
